@@ -1,33 +1,34 @@
 import React from "react";
 import { useParams } from "react-router";
 import { useState, useEffect } from "react";
-import DATA from "../Data";
+// import DATA from "../Data";
 import { useDispatch } from "react-redux";
 import { addItem, delItem } from "../redux/action/index";
 
 const ProductDetail = () => {
   const [cartBtn, setCartBtn] = useState("Add to Cart");
 
-  // const [data, setData] = useState([]);
-
-  // useEffect(() => {
-  //   fetch("https://fakestoreapi.com/products")
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((result) => {
-  //       setData(result);
-  //     });
-  // }, []);
+  const [data, setData] = useState([]);
 
   const proid = useParams();
-  const proDetail = DATA.filter((x) => x.id == proid.id);
-  // const proDetail = data.filter((x) => x.id == proid.id);
+  // const proDetail = DATA.filter((x) => x.id == proid.id);
+  const proDetail = data.filter((x) => x.id == proid.id);
   const product = proDetail[0];
+  console.log(data);
   console.log(product);
+
+  useEffect(() => {
+    fetch(`https://fakestoreapi.com/products/`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((result) => {
+        setData(result);
+      });
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -46,13 +47,13 @@ const ProductDetail = () => {
       <div className="container my-5 py-3">
         <div className="row">
           <div className="col-md-6 d-flex justify-content-center mx-auto product">
-            <img src={product.img} alt={product.title} height="400px" />
+            <img src={data.image} alt={data.title} height="400px" />
           </div>
           <div className="col-md-6 d-flex flex-column justify-content-center">
-            <h1 className="display-5 fw-bold">{product.title}</h1>
+            <h1 className="display-5 fw-bold">{data.title}</h1>
             <hr />
-            <h2 className="my-4">${product.price}</h2>
-            <p className="lead">{product.desc}</p>
+            <h2 className="my-4">${data.price}</h2>
+            <p className="lead">{data.desc}</p>
             <button
               onClick={() => handleCart(product)}
               className="btn btn-outline-dark my-5"

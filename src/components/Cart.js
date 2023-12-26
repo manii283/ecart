@@ -37,7 +37,7 @@ const Cart = () => {
           <div className="row justify-content-center">
             <div className="col-md-4">
               <img
-                src={cartItem.img}
+                src={cartItem.image}
                 alt={cartItem.title}
                 height="200px"
                 width="180px"
