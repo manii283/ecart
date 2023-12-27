@@ -3,7 +3,7 @@ import Products from "./Products";
 
 const Home = () => {
   return (
-    <div classNameName="hero">
+    <div className="hero">
       <div className="card bg-dark text-white border-0">
         <img
           src="./assets/bbb.jpg"
@@ -12,7 +12,7 @@ const Home = () => {
           height="550px"
         />
         <div className="card-img-overlay d-flex flex-column justify-content-center">
-          <div classNameName="container">
+          <div className="container">
             <h5 className="card-title fw-bolder display-3">NEW SEASON ARRIVALS</h5>
             <p className="card-text fs-2">
             CHECK OUT ALL THE TRENDS

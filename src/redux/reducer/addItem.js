@@ -2,39 +2,54 @@ const addItem = [];
 
 const addItems = (state = addItem, action) => {
   switch (action.type) {
-    case "ADDITEM":
-      return [...state, action.payload];
-      break;
+    case "ADDITEM": {
+      const existingItem = state.find((item) => item.id === action.payload.id);
+
+      if (existingItem == 1) {
+        return state.map((item) =>
+          item.id === existingItem.id
+            ? {
+                ...item,
+                quantity: item.quantity + action.payload.quantity,
+                totalPrice: item.totalPrice + action.payload.price,
+              }
+            : item
+        );
+      } else {
+        return [
+          ...state,
+          { ...action.payload, quantity: 1, totalPrice: action.payload.price },
+        ];
+      }
+    }
 
     case "DELITEM":
-      return (state = state.filter((x) => {
-        return x.id !== action.payload.id;
-      }));
-      break;
+      return state.filter((x) => x.id !== action.payload.id);
 
-    // case "ADD_QUNTITY":
-    //   return Object.assign([], state.map(item => {
-    //     if(item.id === action.id){
-    //       item.quantity += action.payload.up;
-    //     }
-    //     return item;
-    //   }
-    //   ));
-    //   break;
+    case "ADD_QUNTITY":
+      return state.map((item) =>
+        item.id === action.payload.id
+          ? {
+              ...item,
+              quantity: item.quantity + 1,
+              totalPrice: item.totalPrice + item.price,
+            }
+          : item
+      );
 
-    // case "REMOVE_QUANTITY":
-    //   return Object.assign([], state.map(item => {
-    //     if(item.id === action.id){
-    //       item.quantity -= action.payload.down;
-    //     }
-    //     return item;
-    //   }
-    //   ));
-    //   break;
+    case "REMOVE_QUANTITY":
+      return state.map((item) =>
+        item.id === action.payload.id && item.quantity > 0
+          ? {
+              ...item,
+              quantity: item.quantity - 1,
+              totalPrice: item.totalPrice - item.price,
+            }
+          : item
+      );
 
     default:
       return state;
-      break;
   }
 };
 

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addItem, delItem } from "../redux/action/index";
+import { addItem } from "../redux/action/index";
 // import DATA from "../Data";
 
 const Product = () => {
@@ -21,7 +21,6 @@ const Product = () => {
       })
   }, []);
 
-  
   const dispatch = useDispatch();
 
   const handleCart = (item) => {
@@ -32,10 +31,10 @@ const Product = () => {
 
   const cardItem = (item) => {
     return (
-      <div class="card my-5 py-4" key={item.id} style={{ width: "18rem" }}>
-        <img src={item.image} class="card-img-top" alt={item.title} height='300px' />
-        <div class="card-body text-center">
-          <h5 class="card-title">{item.title}</h5>
+      <div className="card my-5 py-4" key={item.id} style={{ width: "18rem" }}>
+        <img src={item.image} className="card-img-top" alt={item.title} height='300px' />
+        <div className="card-body text-center">
+          <h5 className="card-title">{item.title}</h5>
           <p className="lead mr-3">${item.price}</p>
           <Link to={`/products/${item.id}`} class="btn btn-outline-dark">
             Buy Now
@@ -50,7 +49,7 @@ const Product = () => {
       </div>
     );
   };
-
+    
   return (
     <div>
       <div className="container py-5">

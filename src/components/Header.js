@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const state = useSelector((state) => state.addItem);
+  // const totalQuantity = state.reduce((acc, cartItem) => acc + cartItem.quantity, 0)
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -46,8 +47,8 @@ const Header = () => {
               </li> */} 
             </ul>
             <Link to="/cart" className="btn btn-outline-dark ms-2">
-              <span className="fa fa-shopping-cart me-1"></span> Cart {state.length} 
-            </Link>
+          <span className="fa fa-shopping-cart me-1"></span> Cart {state.length}
+        </Link>
             <Link to="/register" className="btn btn-outline-dark ms-2">
               <span className="fa fa-user-plus me-1"></span> Register
             </Link>

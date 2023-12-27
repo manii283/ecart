@@ -11,18 +11,20 @@ const Cart = () => {
   const state = useSelector((state) => state.addItem);
   const dispatch = useDispatch();
 
+  // const totalQuantity = state.reduce((acc, cartItem) => acc + cartItem.quantity, 0);
+
   const handleClose = (item) => {
     dispatch(delItem(item));
   };
 
   const handleIncrease = (item) => {
     dispatch(addCartQuantity(item));
-    console.log(addCartQuantity());
+    console.log("ad", item);
   };
 
   const handleDecrease = (item) => {
     dispatch(removeCartQuantity(item));
-    console.log(removeCartQuantity());
+    console.log("rem", item);
   };
 
   const cartItems = (cartItem) => {
@@ -51,6 +53,7 @@ const Cart = () => {
                 onClick={() => handleIncrease(cartItem)}
                 className="fa fa-plus"
               ></button>
+              {/* <p className="lead fw-bold">{(state.length)}</p> */}
               <p className="lead fw-bold">{cartItem.quantity}</p>
               <button
                 onClick={() => handleDecrease(cartItem)}
