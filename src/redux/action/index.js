@@ -12,17 +12,16 @@ export const delItem = (product) => {
   };
 };
 
-export const addCartQuantity = (item) => {
+export const addCartQuantity = (product) => {
   return {
     type: "ADD_QUNTITY",
-    payload: item,
+    payload: product,
   };
 };
 
-export const removeCartQuantity = (item) => {
+export const removeCartQuantity = (product) => {
   return {
     type: "REMOVE_QUANTITY",
-    payload: item,
+    payload: product,
   };
 };
-

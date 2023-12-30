@@ -1,6 +1,10 @@
-import {createStore} from 'redux';
-import rootReducer from './reducer';
+import { configureStore } from '@reduxjs/toolkit';
+import addToCartSlice from './slices/addToCartSlice';
 
-const store = createStore(rootReducer);
-
-export default store;
+export const store = configureStore({
+    reducer: {
+      //storename and redicers name
+    //   authentication: authSlice,
+    cart: addToCartSlice
+    },
+  });

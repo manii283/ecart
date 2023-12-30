@@ -1,38 +1,24 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  delItem,
-  addCartQuantity,
-  removeCartQuantity,
-} from "../redux/action/index";
 import { Link } from "react-router-dom";
+import {
+  decrementQuantity,
+  incrementQuantity,
+  removeItem,
+} from "../redux/slices/addToCartSlice";
 
 const Cart = () => {
-  const state = useSelector((state) => state.addItem);
+  const { cart } = useSelector((state) => state.cart);
+  console.log("state of cart items", cart);
   const dispatch = useDispatch();
 
-  // const totalQuantity = state.reduce((acc, cartItem) => acc + cartItem.quantity, 0);
-
-  const handleClose = (item) => {
-    dispatch(delItem(item));
-  };
-
-  const handleIncrease = (item) => {
-    dispatch(addCartQuantity(item));
-    console.log("ad", item);
-  };
-
-  const handleDecrease = (item) => {
-    dispatch(removeCartQuantity(item));
-    console.log("rem", item);
-  };
-
   const cartItems = (cartItem) => {
+    const itemPrice = cartItem.price * cartItem.quantity;
     return (
       <div className="px-4 my-5 bg-light rounded-3" key={cartItem.id}>
         <div className="container py-4">
           <button
-            onClick={() => handleClose(cartItem)}
+            onClick={() => dispatch(removeItem(cartItem.id))}
             className="btn-close float-end"
             aria-label="Close"
           ></button>
@@ -46,17 +32,16 @@ const Cart = () => {
               />
             </div>
             <div className="col-md-4">
-              <h3>{cartItem.title}</h3>
-              <p className="lead fw-bold">${cartItem.price}</p>
+              <h4>{cartItem.title}</h4>
+              <p className="lead fw-bold">${itemPrice}</p>
               {/*  */}
               <button
-                onClick={() => handleIncrease(cartItem)}
+                onClick={() => dispatch(incrementQuantity(cartItem.id))}
                 className="fa fa-plus"
               ></button>
-              {/* <p className="lead fw-bold">{(state.length)}</p> */}
               <p className="lead fw-bold">{cartItem.quantity}</p>
-              <button
-                onClick={() => handleDecrease(cartItem)}
+              <button 
+                onClick={() => dispatch(decrementQuantity(cartItem.id))}
                 className="fa fa-minus"
               ></button>
               {/*  */}
@@ -96,9 +81,9 @@ const Cart = () => {
 
   return (
     <>
-      {state.length === 0 && emptyCart()}
-      {state.length !== 0 && state.map(cartItems)}
-      {state.length !== 0 && button()}
+      {cart?.length === 0 && emptyCart()}
+      {cart?.length !== 0 && cart?.map(cartItems)}
+      {cart?.length !== 0 && button()}
     </>
   );
 };

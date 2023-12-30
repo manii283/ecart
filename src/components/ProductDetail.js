@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
-import { addItem, delItem } from "../redux/action/index";
+import { removeItem, addToCart } from "../redux/slices/addToCartSlice";
 
-const ProductDetail = () => {
+const ProductDetail = (item) => {
   const [cartBtn, setCartBtn] = useState("Add to Cart");
   const [data, setData] = useState(null); // Use null as the initial state
 
@@ -24,12 +24,12 @@ const ProductDetail = () => {
 
   const dispatch = useDispatch();
 
-  const handleCart = () => {
+  const handleCart = (item) => {
     if (cartBtn === "Add to Cart") {
-      dispatch(addItem(data));
+      dispatch(addToCart(item));
       setCartBtn("Remove from Cart");
-    } else if (data) {
-      dispatch(delItem(data));
+    } else if (item) {
+      dispatch(removeItem(item.id));
       setCartBtn("Add to Cart");
     }
   };
@@ -48,7 +48,7 @@ const ProductDetail = () => {
               <h2 className="my-4">${data.price}</h2>
               <p className="lead">{data.description}</p>
               <button
-                onClick={handleCart}
+                onClick={() => handleCart(item)}
                 className="btn btn-outline-dark my-5"
               >
                 {cartBtn}
