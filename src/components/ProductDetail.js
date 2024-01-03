@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
-import { removeItem, addToCart } from "../redux/slices/addToCartSlice";
+import { addToCart } from "../redux/slices/addToCartSlice";
+import Header from "./Header";
+import { useNavigate } from "react-router-dom";
 
 const ProductDetail = (item) => {
-  const [cartBtn, setCartBtn] = useState("Add to Cart");
-  const [data, setData] = useState(null); // Use null as the initial state
 
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  }, []);
+
+  const cartBtn = "Add to Cart"
+  const [data, setData] = useState(null);            // Use null as the initial state
   const proid = useParams();
 
-  useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${proid.id}`)
-      .then((response) => {
+  useEffect(() => { 
+    fetch(`http://localhost:3004/products/${proid.id}`) 
+      .then((response) => { 
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -24,18 +33,15 @@ const ProductDetail = (item) => {
 
   const dispatch = useDispatch();
 
-  const handleCart = (item) => {
+  const handleCart = (item) => {     
     if (cartBtn === "Add to Cart") {
       dispatch(addToCart(item));
-      setCartBtn("Remove from Cart");
-    } else if (item) {
-      dispatch(removeItem(item.id));
-      setCartBtn("Add to Cart");
-    }
+    } 
   };
 
   return (
     <>
+    <Header />
       <div className="container my-5 py-3">
         {data && (
           <div className="row">
@@ -48,7 +54,7 @@ const ProductDetail = (item) => {
               <h2 className="my-4">${data.price}</h2>
               <p className="lead">{data.description}</p>
               <button
-                onClick={() => handleCart(item)}
+                onClick={() => handleCart(data)}
                 className="btn btn-outline-dark my-5"
               >
                 {cartBtn}

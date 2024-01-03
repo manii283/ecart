@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-// import { useDispatch } from "react-redux";
-// import { removeItem } from "../redux/slices/addToCartSlice";
+import Header from "./Header";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const { cart } = useSelector((state) => state.cart);
-  // const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  }, []);
 
   const getTotal = () => {
     let totalQuantity = 0;
@@ -33,23 +39,19 @@ const Checkout = () => {
           <h6 className="my-0">{item.title}</h6>
         </div>
         <span className="text-muted">${itemPrice}</span>
-        {/* <button
-          onClick={() => dispatch(removeItem(item.id))}
-          className="btn-close float-end"
-          aria-label="Close"
-        ></button> */}
       </li>
     );
   };
 
   return (
     <>
+    <Header />
       <div className="container my-5">
         <div className="row g-5">
           <div className="col-md-5 col-lg-5 order-md-last">
-            <h4 className="d-flex justify-content-between align-items-center mb-3">
+            <h4 className=" align-items-center mb-3">
               <span className="text-dark">Your cart</span>
-              <span className="badge bg-dark rounded-pill">
+              <span className="badge bg-dark rounded-pill mx-5">
                 {getTotal().totalQuantity}
               </span>
             </h4>
@@ -61,7 +63,6 @@ const Checkout = () => {
               </li>
             </ul>
           </div>
-          {/* form */}
         </div>
       </div>
     </>

@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ABOUTIMAGE from '../assets/bbb.jpg'
+import Header from "./Header";
 
 const About = () => {
   return (
     <div>
+      <Header />
       <div className="container py-5 my-5">
         <div className="row">
           <div className="col-md-6">

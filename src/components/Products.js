@@ -2,16 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/slices/addToCartSlice";
-// import DATA from "../Data";
+import Header from "./Header";
+import { useNavigate } from "react-router-dom";
 
 const Product = () => {
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  }, []);
+
   const [item, setItem] = useState([]);
-  const [cartBtn, setCartBtn] = useState("Add to Cart");
-  // or
-  // const cartBtn = "Add to Cart";
+  const cartBtn = "Add to Cart";
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch("http://localhost:3004/products")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -26,7 +33,7 @@ const Product = () => {
   const dispatch = useDispatch();
 
   const handleCart = (item) => {
-    if (cartBtn === "Add to Cart") {
+    if (cartBtn) {
       dispatch(addToCart(item));
     }
   };
@@ -54,8 +61,8 @@ const Product = () => {
               onClick={() => handleCart(item)}
               className="btn btn-outline-dark"
             >
-              {cartBtn}
-            </button>
+              {cartBtn}                                   {/* add to cart button */}
+            </button>                                    
           </div>
         </div>
       </div>
@@ -64,6 +71,7 @@ const Product = () => {
 
   return (
     <div>
+      <Header/>
       <div className="container py-5">
         <div className="row">
           <div className="col-12 text-center">
